@@ -1,8 +1,9 @@
-const config = require("../config/auth-config");
 const db = require("../models");
-
+const dotenv = require('dotenv')
 const User = db.user;
 const Role = db.role;
+
+dotenv.config()
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -59,7 +60,6 @@ exports.signup = (req, res) => {
     };
     
 exports.signin = (req, res) => {
-    console.log(req.body.username);
     User.findOne({
         username: req.body.username
     })
@@ -82,8 +82,8 @@ exports.signin = (req, res) => {
                     message: "Invalid Password!"
                 });
             }
-            var token = jwt.sign({ id: user.id }, config.secret, {
-                expiresIn: 86400 // 24 hours
+            var token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+                expiresIn: "30d" // 30 days
             });
             var authorities = [];
             for (let i = 0; i < user.roles.length; i++) {

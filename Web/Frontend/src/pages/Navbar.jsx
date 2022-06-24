@@ -7,7 +7,6 @@ function Navbar() {
     const [visible, setVisible] = useState("right-[100%]");
   console.log(visible);
   function menuClick() {
-    console.log("clicked");
     if (visible) {
       setVisible("");
     } else if (visible === "") {
