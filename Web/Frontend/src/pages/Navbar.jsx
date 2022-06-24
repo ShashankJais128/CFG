@@ -43,7 +43,6 @@ function Navbar() {
                   Admin
                 </Link> */}
               </div>
-              
             {/* secondary nav */}
             <div className="hidden lg:flex my-4 rounded-full bg-gray-500 hover:bg-gray-400 items-center text-lg">
               <Link to="/signin" className="py-1 px-3  rounded transition duration-300">
