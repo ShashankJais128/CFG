@@ -1,75 +1,27 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose");
+const dotenv = require("dotenv")
+const colors = require('colors')
+const connectDB = require('./config/db-config')
 
-// Import functions and callbacks associated
-// With admin, and user.
+//Import functions and callbacks associated
+//With admin, and user.
 const userRoutes = require("./routes/user-routes");
 const authRoutes = require("./routes/auth-routes");
 
-// Import auth-routes and user-routes
-
+//Import auth-routes and user-routes
 const errorController = require('./controllers/error');
 
-const dbConfig = require("./config/db-config");
-
-// Import the index.js file in the models directory.
-const db = require("./models");
-
-// Why not use 'const' in place of var?
+//Why not use 'const' in place of var?
 var corsOptions = {
     origin: "http://localhost:8081"
 };  
 
-// Create the express app.
+//Create the express app.
 const app = express();
 
-// *******************************************************
-const Role = db.role;
-
-db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-useNewUrlParser: true,
-useUnifiedTopology: true
-})
-.then(() => {
-    console.log("Successfully connected to MongoDB.");
-    initial();
-})
-.catch(err => {
-    console.error("Connection error", err);
-    process.exit();
-});
-
-function initial() {
-    Role.estimatedDocumentCount((err, count) => {
-        if (!err && count === 0) {
-            new Role({
-                name: "user"
-            }).save(err => {
-                if (err) {
-                    console.log("error", err);
-                }
-                console.log("added 'user' to roles collection");
-            });
-            new Role({
-                name: "moderator"
-            }).save(err => {
-                if (err) {
-                    console.log("error", err);
-                }
-                console.log("added 'moderator' to roles collection");
-            });
-            new Role({
-                name: "admin"
-            }).save(err => {
-                if (err) {
-                    console.log("error", err);
-                }
-                console.log("added 'admin' to roles collection");
-            });
-        }
-    });
-}
+dotenv.config()
+connectDB()
 // *******************************************************
 
 // parse requests of content-type - application/json
@@ -90,10 +42,6 @@ const path = require("path");
 // Import functions and callbacks associated
 // With admin, and user.
 const adminData = require("./routes/admin");
-const userRoutes = require("./routes/user");
-const errorController = require('./controllers/error');
-
-const app = express();
 
 // app.set("view engine", "ejs");
 // app.set("views", "views");
@@ -119,4 +67,6 @@ app.use("/", errorController.get404Page);
 // sudo systemctl start mongod
 // sudo systemctl enable mongod
 // mongo --eval 'db.runCommand({ connectionStatus: 1 })'
-app.listen(3000);
+const PORT = process.env.PORT || 5000
+
+app.listen(PORT, console.log("server runnning....".yellow.bold))
