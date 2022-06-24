@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(bodyParser.urlencoded({ extended: false }));
 
 router.post(
-  "/api/auth/signup",
+  "/signup",
   [
     verifySignUp.checkDuplicateUsernameOrEmail,
     verifySignUp.checkRolesExisted
@@ -20,7 +20,7 @@ router.post(
   controller.signup
 );
 
-router.get("/api/auth/signin", controller.signin);
+router.post("/signin", controller.signin);
 
 
 // Handles get request for the route: /admin/add-model-data.

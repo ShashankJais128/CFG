@@ -12,10 +12,10 @@ const authRoutes = require("./routes/auth-routes");
 //Import auth-routes and user-routes
 const errorController = require('./controllers/error');
 
-//Why not use 'const' in place of var?
-var corsOptions = {
-    origin: "http://localhost:8081"
-};  
+// //Why not use 'const' in place of var?
+// var corsOptions = {
+//     origin: "http://localhost:8081"
+// };  
 
 //Create the express app.
 const app = express();
@@ -26,15 +26,12 @@ connectDB();
 
 // parse requests of content-type - application/json
 app.use(express.json());
-
+app.use(cors())
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-// Handling admin paths. Every route starting with,
-// "/admin" is an admin route.
-app.use("/", authRoutes.routes);
 
 // Handling the "/" route.
 const path = require("path");
@@ -46,11 +43,12 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Handling admin paths. Every route starting with,
 // "/admin" is an admin route
-app.use("/admin", authRoutes.routes);
+app.use("/api/auth", authRoutes.routes);
 
 // Handling user paths. Every route starting with,
 // "/user" is a user route.
-app.use("/", userRoutes.routes);
+app.use("/user", userRoutes.routes);
+
 
 // Handling a 404 page.
 app.use("/", errorController.get404Page);
