@@ -1,8 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv")
-const colors = require('colors')
-const connectDB = require('./config/db-config')
+const dotenv = require("dotenv");
+const colors = require('colors');
+const connectDB = require('./config/db-config');
 
 //Import functions and callbacks associated
 //With admin, and user.
@@ -20,9 +20,9 @@ var corsOptions = {
 //Create the express app.
 const app = express();
 
-dotenv.config()
-connectDB()
-// *******************************************************
+// Database configuration.
+dotenv.config();
+connectDB();
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -39,10 +39,6 @@ app.use("/", authRoutes.routes);
 // Handling the "/" route.
 const path = require("path");
 
-// Import functions and callbacks associated
-// With admin, and user.
-const adminData = require("./routes/admin");
-
 // app.set("view engine", "ejs");
 // app.set("views", "views");
 
@@ -50,7 +46,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // Handling admin paths. Every route starting with,
 // "/admin" is an admin route
-app.use("/admin", adminData.routes);
+app.use("/admin", authRoutes.routes);
 
 // Handling user paths. Every route starting with,
 // "/user" is a user route.

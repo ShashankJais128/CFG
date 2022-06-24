@@ -20,7 +20,7 @@ router.post(
   controller.signup
 );
 
-router.post("/api/auth/signin", controller.signin);
+router.get("/api/auth/signin", controller.signin);
 
 
 // Handles get request for the route: /admin/add-model-data.

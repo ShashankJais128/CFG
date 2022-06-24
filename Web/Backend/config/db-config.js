@@ -1,12 +1,13 @@
-const mongoose = require('mongoose')
-const colors = require('colors')
-const db =  require('../models')
-const dotenv = require('dotenv')
-dotenv.config()
-const DB = process.env.MONGO_URI
+const mongoose = require('mongoose');
+const colors = require('colors');
+const db =  require('../models');
+const dotenv = require('dotenv');
+dotenv.config();
+const DB = process.env.MONGO_URI;
+
 const connectDB = async() => {
     try{
-        const conn = await mongoose.connect(DB,{
+        const conn = await mongoose.connect(DB, {
             useNewUrlParser: true,
             useUnifiedTopology:true,
         })
@@ -19,6 +20,7 @@ const connectDB = async() => {
         process.exit(1)
     }
 }
+
 const Role = db.role;
 function initial() {
   Role.estimatedDocumentCount((err, count) => {
@@ -50,4 +52,4 @@ function initial() {
       }
   });
 }
-module.exports = connectDB
+module.exports = connectDB;
