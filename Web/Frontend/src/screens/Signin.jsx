@@ -3,7 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom'
 import {login, register} from '../actions/userActions.jsx'
 import {useSelector, useDispatch} from 'react-redux'
-import Navbar from './Navbar'
+import Messages from '../pages/Messages.jsx';
+import Loader from '../pages/Loader.jsx';
+import Navbar from '../pages/Navbar'
 
 function Signin() {
   const [username, setUserName] = useState('')
@@ -22,7 +24,6 @@ function Signin() {
 
 const signinHandler = (e) => {
   e.preventDefault();
-  console.log(password)
   dispatch(login(username,password))
 }
 
@@ -33,6 +34,8 @@ const signinHandler = (e) => {
 
         <h1 className='text-3xl font-bold'>Login</h1><br /><br />
 
+        {loading && <Loader />}
+        {error && <Messages color="red">{error}</Messages>}
         <input className='w-[300px] sm:w-[400px] p-1.5 text-lg rounded' type="text" name="" id="username" value={username} onChange= {(e) => setUserName(e.target.value)} placeholder='Enter Username' /><br />
 
         <input className='w-[300px] sm:w-[400px] p-1.5 text-lg rounded' type="password" name="" id="password" placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/>

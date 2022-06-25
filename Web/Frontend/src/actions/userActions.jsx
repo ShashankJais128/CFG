@@ -53,10 +53,10 @@ export const register = (username, email, password) => async(dispatch) => {
             payload: data
         })
 
-        // dispatch({
-        //     type: USER_LOGIN_SUCCESS,
-        //     payload: data
-        // })
+        dispatch({
+            type: USER_LOGIN_SUCCESS,
+            payload: data
+        })
 
         localStorage.setItem('userInfo', JSON.stringify(data))
     }catch(error) {
@@ -65,4 +65,11 @@ export const register = (username, email, password) => async(dispatch) => {
             payload: error.response && error.response.data.message ? error.response.data.message : error.message,
         })
     }
+}
+
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('userInfo')
+    dispatch({
+        type: USER_LOGOUT
+    })
 }

@@ -7,8 +7,8 @@ import {
   Link
 } from "react-router-dom";
 import Home from './pages/Home';
-import Signin from './pages/Signin';
-import Signup from './pages/Signup';
+import Signin from './screens/Signin';
+import Signup from './screens/Signup';
 
 function App() {
 
